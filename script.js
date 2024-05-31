@@ -8,48 +8,46 @@ function Book(title, author, pages, isRead) {
   this.isRead = isRead;
 }
 
-addBookToLibrary('Hamlet', 'William Shakespeare', 432, true);
-addBookToLibrary('The Hobbit', 'J.R.R Tolkien', 295, false);
-addBookToLibrary('50 Below Zero', 'Robert Munsch', 24, true);
+Book.prototype.readBook = function() {
+    this.isRead = !this.isRead;
+  }
 
 // Adds books to myLibrary array
 function addBookToLibrary(title, author, pages, isRead) {
     const newBook = new Book(title, author, pages, isRead);
     myLibrary.push(newBook);
+    displayBook();
 }
 
 // Display books to the DOM 
 function displayBook(){
-    const bookshelf = document.getElementById("bookshelf");
-
-    myLibrary.forEach(book => {
+    const bookshelf = document.getElementById('bookshelf');
+    //Reset the bookshelf by getting innerHTML to nothing, this removes duplicates
+    bookshelf.innerHTML = "";
+    myLibrary.forEach((book,index) =>{
         const card = document.createElement("div");
         card.classList.add("card");
-
-        const title = document.createElement("h2");
-        title.textContent = book.title;
-
-        const author = document.createElement("p");
-        author.textContent = "Author: " + book.author;
-
-        const pages = document.createElement("p");
-        pages.textContent = "Pages: " + book.pages;
-    
-        card.appendChild(title);
-        card.appendChild(author);
-        card.appendChild(pages);
+        card.innerHTML = `
+        <p><strong>Title:</strong> ${book.title}</p>
+        <p><strong>Author:</strong> ${book.author}</p>
+        <p><strong>Pages:</strong> ${book.pages}</p>
+        <p><strong>Read:</strong> ${book.isRead ? 'Yes' : 'No'}</p>
+        <button onclick="removeBook(${index})">Remove</button>
+        <button onclick="readStatus(${index})">Toggle Read</button>`;
 
         bookshelf.appendChild(card);
     });
 }
 
-function resetBookShelf(){
-    const bookshelf = document.getElementById("Bookshelf");
-    myLibrary.forEach(book => {
-        const card = document.querySelector(".card");
-        card.remove();
-    });
+function removeBook(index){
+    myLibrary.splice(index, 1);
+    displayBook();
 }
+
+function readStatus(index) {
+    myLibrary[index].readBook();
+    displayBook();
+  }
 
 // Dialog related functions
 function showDialog(){
@@ -74,7 +72,6 @@ document.querySelector('#bookForm').onsubmit = function(e){
     const isRead = document.querySelector('#isRead').checked;
 
     if (title && author && !isNaN(pages) && pages >= 1) {
-        resetBookShelf();
         addBookToLibrary(title, author, pages, isRead);
         displayBook();
         closeDialog();
@@ -83,5 +80,9 @@ document.querySelector('#bookForm').onsubmit = function(e){
         alert('Please fill in all fields correctly.');
       }
 }
+
+addBookToLibrary('Hamlet', 'William Shakespeare', 432, true);
+addBookToLibrary('The Hobbit', 'J.R.R Tolkien', 295, false);
+addBookToLibrary('50 Below Zero', 'Robert Munsch', 24, true);
 
 window.onload = displayBook();
