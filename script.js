@@ -32,8 +32,10 @@ function displayBook(){
         <p><strong>Author:</strong> ${book.author}</p>
         <p><strong>Pages:</strong> ${book.pages}</p>
         <p><strong>Read:</strong> ${book.isRead ? 'Yes' : 'No'}</p>
-        <button onclick="removeBook(${index})">Remove</button>
-        <button onclick="readStatus(${index})">Toggle Read</button>`;
+        <div class="button-container">
+            <button class="remove-button" onclick="removeBook(${index})">Remove</button>
+            <button class="read-button" onclick="readStatus(${index})">Toggle Read</button>
+        </div>`;
 
         bookshelf.appendChild(card);
     });
@@ -77,7 +79,7 @@ document.querySelector('#bookForm').onsubmit = function(e){
         closeDialog();
         document.querySelector('#bookForm').reset();
       } else {
-        alert('Please fill in all fields correctly.');
+        alert('Please fill in all fields!');
       }
 }
 
