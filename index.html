@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <header>
         <h1>My Library</h1>
@@ -14,11 +16,34 @@
         <aside class="sidebar-left"></aside>
         <main>
             <div class="grid-container" id="bookshelf">
-
+                <!--cards (books) will go here-->
             </div>
+            <button class="addButton">NEW BOOK</button>
         </main>
         <aside class="sidebar-right"></aside>
     </div>
+    <!-- Dialog for adding a new book -->
+    <dialog id="mainDialog" class="dialog">
+        <div class="dialog-container">
+            <span class="close" id="closeDialog">X</span>
+            <div>
+                <h2>Add a New Book</h2>
+                <form id="bookForm">
+                    <input type="text" id="title" placeholder="  Title" required>
+                    <input type="text" id="author" placeholder="  Author" required>
+                    <input type="number" id="pages" placeholder="  Pages" required>
+            </div>
+            <div class="checkbox-container">
+                <label for="isRead">Have you read this book?</label>
+                <input type="checkbox" id="isRead">
+            </div>
+            <div class="submit-button">
+                <button type="submit">Submit</button>
+            </div>
+            </form>
+        </div>
+    </dialog>
     <script src="script.js" defer></script>
 </body>
+
 </html>
